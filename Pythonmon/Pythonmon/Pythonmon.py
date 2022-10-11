@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from pokemon import Pokemon
 from player import Player
 from battle import Battle
@@ -14,13 +16,13 @@ def main():
 
     player_a = Player(
         "Trainer A",
-        all_pokemon[0],
-        all_pokemon[1:]
+        deepcopy(all_pokemon[0]),
+        [deepcopy(pokemon) for pokemon in all_pokemon[1:]]
     )
     player_b = Player(
         "Trainer B",
-        all_pokemon[0],
-        all_pokemon[1:]
+        deepcopy(all_pokemon[0]),
+        [deepcopy(pokemon) for pokemon in all_pokemon[1:]]
     )
     battle = Battle(player_a, player_b)
     battle.start()
