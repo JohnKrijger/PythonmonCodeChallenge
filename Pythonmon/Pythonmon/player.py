@@ -12,9 +12,11 @@ class Player:
         self.move_speed = 0
 
     def can_continue(self):
+        """Player can't continue if no Pokémon are healthy."""
         return self.active_pokemon.is_alive() or self.other_pokemon
 
     def choose_move(self):
+        """"Player commits to a move that is later executed."""
         print(f"{self.name}'s team:")
         self.list_team()
         while True:
@@ -22,14 +24,17 @@ class Player:
                   "switch.")
             self.move = input()
             if self.move == "a":
+                # Player chose to attack, this is a valid move.
                 break
             try:
                 switch_id = int(self.move)
                 if switch_id in range(0, len(self.other_pokemon)):
+                    # Player chose to switch, this is a valid move.
                     break
             except ValueError:
                 pass
             print("Invalid input")
+        # Set speed of player move.
         self.move_speed = (
             self.active_pokemon.speed
             + (0 if self.move == "a" else 1000) # Switching priority
@@ -37,6 +42,7 @@ class Player:
          )
 
     def switch_after_faint(self):
+        """Force player to switch."""
         print(f"{self.name}'s team:")
         self.list_team()
         switch_id = 0
@@ -49,12 +55,14 @@ class Player:
             except ValueError:
                 pass
             print("Invalid input")
+        # Set move to switch action, player can't attack anymore this round.
         self.move = str(switch_id)
         self.active_pokemon = self.other_pokemon[switch_id]
         del self.other_pokemon[switch_id]
 
 
     def switch(self):
+        """Relplace active Pokémon with another Pokémon."""
         temp = self.active_pokemon
         self.active_pokemon = self.other_pokemon[int(self.move)]
         self.other_pokemon[int(self.move)] = temp
@@ -62,6 +70,7 @@ class Player:
               f"{self.active_pokemon.name}!")
 
     def get_attack(self):
+        """Get the attack damage."""
         damage = self.active_pokemon.attack()
         if damage > 0:
             print(f"{self.name}'s {self.active_pokemon.name} dealt {damage} "
@@ -71,6 +80,7 @@ class Player:
         return damage
 
     def take_damage(self, damage):
+        """Player's active Pokémon recieves damage."""
         health_lost = self.active_pokemon.take_damage(damage)
         print(f"{self.name}'s {self.active_pokemon.name} lost {health_lost}% "
               "HP!")

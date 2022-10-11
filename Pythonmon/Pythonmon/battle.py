@@ -6,10 +6,12 @@ class Battle:
         self.players = [player_a, player_b]
 
     def start(self):
+        """Start the battle."""
         while True:
             self.play_round();
             for player in self.players:
                 if not player.can_continue():
+                    # Battle ends if one player can't continue.
                     print(f"{player.name} has no Pokémon left and lost the "
                           "battle.")
                     return
@@ -25,14 +27,19 @@ class Battle:
         self.execute_moves()
 
     def choose_moves(self):
+        """Each player selects a move."""
         for player in self.players:
             player.choose_move()
 
     def execute_moves(self):
+        """All moves are executed."""
+
+        # Players are ordered by the active Pokémon's speed and priorities.
         ordered_player_ids = sorted(
             [0, 1],
             key = lambda i: -self.players[i].move_speed)
 
+        # Switching has priority over attacking.
         for player_id in ordered_player_ids:
             player = self.players[player_id]
             if player.move != "a":

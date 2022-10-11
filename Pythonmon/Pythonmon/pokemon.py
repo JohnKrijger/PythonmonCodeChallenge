@@ -37,7 +37,8 @@ class Pokemon:
         return round(self.health * 100 / self.max_health)
 
     def description(self):
-        return f"{self.name:8}|{self.health:3}/{self.max_health:3}|{self.damage:3}|{self.hit_chance:3}|{self.speed}"
+        return (f"{self.name:8}|{self.health:3}/{self.max_health:3}|"
+                f"{self.damage:3}|{self.hit_chance:3}|{self.speed}")
 
 
 
