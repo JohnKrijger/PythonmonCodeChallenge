@@ -1,23 +1,48 @@
 from pokemon import Pokemon
+from player import Player
 
 def main():
-    print("           [pokémon | HP/max|dmg|acc|spd]")
-    attacking_mon = Pokemon("Lando-T", 642, 230, 100, 241)
-    print(f"Attacking: [{attacking_mon.description()}]")
-    defending_mon = Pokemon("Toxapex", 810, 116, 100, 106)
-    print(f"Defending: [{defending_mon.description()}]")
-    damage = attacking_mon.attack()
-    if damage > 0:
-        print(f"{attacking_mon.name} dealt {damage} damage!")
-        health_lost = defending_mon.take_damage(damage)
-        print(f"{defending_mon.name} lost {health_lost}% HP!")
-        if not defending_mon.is_alive():
-            print(f"{defending_mon.name} fainted!")
-    else:
-        print(f"{attacking_mon.name} missed!")
-    print("           [pokémon | HP/max|dmg|acc|spd]")
-    print(f"Attacking: [{attacking_mon.description()}]")
-    print(f"Defending: [{defending_mon.description()}]")
+    players = [
+        Player(
+            "Trainer A",
+            Pokemon("Lando-T", 642, 230, 100, 241),
+            [
+                Pokemon("Toxapex", 810, 116, 100, 106),
+            ]
+        ),
+        Player(
+            "Trainer B",
+            Pokemon("Lando-T", 642, 230, 100, 241),
+            [
+                Pokemon("Toxapex", 810, 116, 100, 106),
+            ]
+        ),
+        ]
+
+    for player in players:
+        player.list_team()
+
+    while True:
+        print("Round start!")
+        for player in players:
+            player.choose_move()
+
+        ordered_player_ids = sorted(
+            [0, 1],
+            key = lambda i: -players[i].move_speed)
+
+        for player_id in ordered_player_ids:
+            player = players[player_id]
+            if player.move != "a":
+                player.switch()
+
+        for player_id in ordered_player_ids:
+            player = players[player_id]
+            if player.move == "a":
+                damage = player.get_attack()
+                if damage > 0:
+                    players[1 - player_id].take_damage(damage)
+
 
 if __name__ == "__main__":
     main()

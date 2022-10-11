@@ -24,7 +24,7 @@ class Pokemon:
         self.health -= damage
         if self.health < 0:
             self.health = 0
-        return (old_health - self.health) * 100 // self.max_health
+        return round((old_health - self.health) * 100 / self.max_health)
 
     def remaining_health_ratio(self):
         """Returns the ratio of health remaining"""
@@ -32,6 +32,9 @@ class Pokemon:
 
     def is_alive(self):
         return self.health >= 0
+
+    def remaining_hp_ratio(self):
+        return round(self.health * 100 / self.max_health)
 
     def description(self):
         return f"{self.name:8}|{self.health:3}/{self.max_health:3}|{self.damage:3}|{self.hit_chance:3}|{self.speed}"
