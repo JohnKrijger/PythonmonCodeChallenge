@@ -2,15 +2,15 @@ from random import randint
 
 class Pokemon:
     
-    def __init__(self, name, max_health, damage, hit_chance, speed):
-        self.name = name # Name of the pokémon
-        self.max_health = max_health # Amount of damage the pokémon can take
+    def __init__(self, name, max_health, damage, hit_chance, speed, type):
+        self.name = name # Name of the Pokémon
+        self.max_health = max_health # Amount of damage the Pokémon can take
         self.health = max_health # Current health
         self.damage = damage # Damage of an attack
         self.hit_chance = hit_chance # Percentage chance to hit
         self.speed = speed # Determines attack order
+        self.type = type # Type determines weaknesses and resistances
     
-
     def attack(self):
         """Returns the damage from an attack or 0 if it misses."""
         return self.damage if randint(1, 100) <= self.hit_chance else 0
@@ -38,7 +38,7 @@ class Pokemon:
 
     def description(self):
         return (f"{self.name:8}|{self.health:3}/{self.max_health:3}|"
-                f"{self.damage:3}|{self.hit_chance:3}|{self.speed}")
+                f"{self.damage:3}|{self.hit_chance:3}|{self.speed}|{self.type:6}")
 
 
 

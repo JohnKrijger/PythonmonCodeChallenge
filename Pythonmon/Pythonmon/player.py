@@ -72,11 +72,6 @@ class Player:
     def get_attack(self):
         """Get the attack damage."""
         damage = self.active_pokemon.attack()
-        if damage > 0:
-            print(f"{self.name}'s {self.active_pokemon.name} dealt {damage} "
-                  "damage!")
-        else:
-            print(f"{self.name}'s {self.active_pokemon.name} missed!")
         return damage
 
     def take_damage(self, damage):
@@ -93,7 +88,7 @@ class Player:
                 self.switch_after_faint()
 
     def list_team(self):
-        print("[id|pokémon | HP/max|dmg|acc|spd]")
+        print("[id|Pokémon | HP/max|dmg|acc|spd|Type  ]")
         print(f"[ a|{self.active_pokemon.description()}]")
         for i, pokemon in enumerate(self.other_pokemon):
             print(f"[ {i}|{pokemon.description()}]")

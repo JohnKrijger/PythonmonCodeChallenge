@@ -1,5 +1,7 @@
 from time import sleep
 
+from type_effects import TypeEffects
+
 class Battle:
 
     def __init__(self, player_a, player_b):
@@ -50,11 +52,23 @@ class Battle:
             player = self.players[player_id]
             if player.move == "a":
                 damage = player.get_attack()
-                sleep(0.5)
                 if damage > 0:
                     other = self.players[1 - player_id]
+                    effectiveness = TypeEffects.effectiveness(
+                                        player.active_pokemon.type,
+                                        other.active_pokemon.type)
+                    damage = round(damage * effectiveness)
+                    print(f"{player.name}'s {player.active_pokemon.name} dealt "
+                          f"{damage} damage!")
+                    if effectiveness > 1.0:
+                        print("It was super effective!")
+                    elif effectiveness < 1.0:
+                        print("It was not very effective!")
                     other.take_damage(damage)
                     sleep(0.5)
                     if not other.can_continue():
                         sleep(0.5)
                         break
+                else:
+                    print(f"{self.name}'s {self.active_pokemon.name} missed!")
+                sleep(0.5)

@@ -6,12 +6,12 @@ from battle import Battle
 
 def main():
     all_pokemon = [
-        Pokemon("Lando-T", 642, 230, 100, 241),
-        Pokemon("Toxapex", 810, 116, 100, 106),
-        Pokemon("Heatran", 480, 298, 75, 278),
-        Pokemon("Kartana", 464, 253, 100, 348),
-        Pokemon("D-pult", 356, 255, 100, 421),
-        Pokemon("Rilla", 443, 321, 100, 269),
+        Pokemon("Lando-T", 642, 230, 100, 241, "Ground"),
+        Pokemon("Toxapex", 810, 116, 100, 106, "Water"),
+        Pokemon("Heatran", 480, 298, 75, 278, "Fire"),
+        Pokemon("Kartana", 464, 253, 100, 348, "Steel"),
+        Pokemon("D-pult", 356, 255, 100, 421, "Dragon"),
+        Pokemon("Rilla", 443, 321, 100, 269, "Grass"),
     ]
 
     player_a = Player(
