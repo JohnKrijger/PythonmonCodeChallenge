@@ -20,7 +20,5 @@ def main():
     battle = Battle(player_a, player_b)
     battle.start()
 
-
-
 if __name__ == "__main__":
     main()

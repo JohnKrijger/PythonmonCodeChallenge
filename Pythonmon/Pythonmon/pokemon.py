@@ -31,7 +31,7 @@ class Pokemon:
         return self.health / self.max_health
 
     def is_alive(self):
-        return self.health >= 0
+        return self.health > 0
 
     def remaining_hp_ratio(self):
         return round(self.health * 100 / self.max_health)

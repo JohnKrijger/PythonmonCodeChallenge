@@ -11,6 +11,9 @@ class Player:
         self.move = "a"
         self.move_speed = 0
 
+    def can_continue(self):
+        return self.active_pokemon.is_alive() or self.other_pokemon
+
     def choose_move(self):
         print(f"{self.name}'s team:")
         self.list_team()
@@ -32,6 +35,24 @@ class Player:
             + (0 if self.move == "a" else 1000) # Switching priority
             + random() # Tie breaker
          )
+
+    def switch_after_faint(self):
+        print(f"{self.name}'s team:")
+        self.list_team()
+        switch_id = 0
+        while True:
+            print("Choose an inactive Pokémon's id to switch.")
+            try:
+                switch_id = int(input())
+                if switch_id in range(0, len(self.other_pokemon)):
+                    break
+            except ValueError:
+                pass
+            print("Invalid input")
+        self.move = str(switch_id)
+        self.active_pokemon = self.other_pokemon[switch_id]
+        del self.other_pokemon[switch_id]
+
 
     def switch(self):
         temp = self.active_pokemon
@@ -58,6 +79,8 @@ class Player:
                   f"{self.active_pokemon.remaining_hp_ratio()}% HP left!")
         else:
             print(f"{self.name}'s {self.active_pokemon.name} fainted!")
+            if self.can_continue():
+                self.switch_after_faint()
 
     def list_team(self):
         print("[id|pokémon | HP/max|dmg|acc|spd]")

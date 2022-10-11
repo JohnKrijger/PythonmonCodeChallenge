@@ -6,6 +6,11 @@ class Battle:
     def start(self):
         while True:
             self.play_round();
+            for player in self.players:
+                if not player.can_continue():
+                    print(f"{player.name} has no Pokémon left and lost the "
+                          "battle.")
+                    return
 
     def play_round(self):
         print("Round start!")
@@ -31,4 +36,7 @@ class Battle:
             if player.move == "a":
                 damage = player.get_attack()
                 if damage > 0:
-                    self.players[1 - player_id].take_damage(damage)
+                    other = self.players[1 - player_id]
+                    other.take_damage(damage)
+                    if not other.can_continue():
+                        break
